@@ -31,3 +31,4 @@ C:\Users\bruno\Desktop\ayudantia01\api01\obj\Debug\net8.0\refint\api01.dll
 C:\Users\bruno\Desktop\ayudantia01\api01\obj\Debug\net8.0\api01.pdb
 C:\Users\bruno\Desktop\ayudantia01\api01\obj\Debug\net8.0\api01.genruntimeconfig.cache
 C:\Users\bruno\Desktop\ayudantia01\api01\obj\Debug\net8.0\ref\api01.dll
+C:\Users\bruno\Desktop\ayudantia01\api01\obj\Debug\net8.0\api01.sourcelink.json
