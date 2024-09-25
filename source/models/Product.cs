@@ -7,10 +7,17 @@ namespace api01.source.models
 {
     public class Product
     {
-        public String name { get; set;} - string.Empty;
-
+        public String Name { get; set; } = string.Empty;
+        
         public int Id { get; set; }
 
         public int Price { get; set; }
+
+
+        //Entityframework relationships
+
+        public List<User> Users {get; set;} = [];
+
+        
     }
 }

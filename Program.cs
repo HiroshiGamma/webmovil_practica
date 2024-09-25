@@ -1,4 +1,5 @@
 using api01.source.data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<ApplicationDBContext>();
+String connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") ?? "Data Source=database.db";
+builder.Services.AddDbContext<ApplicationDBContext>(opt => opt.UseSqlite(connectionString));
 
 var app = builder.Build();
 
