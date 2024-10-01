@@ -17,10 +17,10 @@ namespace api01.source.models
 
         // Entityframework relationships 
 
-        public List<Product> products {get;set;} = [];
+        public List<Product> Products {get; } = [];
 
-        public int RoleId {get;set;} 
-        public Rol rol {get;set;} = null; 
+        public int RolId { get; set; } 
+        public Rol Rol {get; set; } = null!; 
 
         
     }

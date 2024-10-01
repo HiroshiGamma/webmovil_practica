@@ -5,7 +5,10 @@ obj/
 # IDEs 
 .vscode/ 
 .idea/ 
-do
-#Enviorement 
+
+#Enviorement
+.env 
+
+#DB 
 *.sqlite 
 *.db 

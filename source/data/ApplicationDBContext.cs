@@ -16,6 +16,6 @@ namespace api01.source.data
 
         public DbSet<Rol> Rols {get; set; } = null!; 
 
-        
+
     }
 }

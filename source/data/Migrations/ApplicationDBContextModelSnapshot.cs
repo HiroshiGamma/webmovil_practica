@@ -18,15 +18,15 @@ namespace api01.source.data.Migrations
 
             modelBuilder.Entity("ProductUser", b =>
                 {
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("UsersId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("productsId")
-                        .HasColumnType("INTEGER");
+                    b.HasKey("ProductsId", "UsersId");
 
-                    b.HasKey("UsersId", "productsId");
-
-                    b.HasIndex("productsId");
+                    b.HasIndex("UsersId");
 
                     b.ToTable("ProductUser");
                 });
@@ -78,47 +78,44 @@ namespace api01.source.data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("RoleId")
+                    b.Property<int>("RolId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Rut")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("rolId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("rolId");
+                    b.HasIndex("RolId");
 
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ProductUser", b =>
                 {
-                    b.HasOne("api01.source.models.User", null)
+                    b.HasOne("api01.source.models.Product", null)
                         .WithMany()
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("api01.source.models.Product", null)
+                    b.HasOne("api01.source.models.User", null)
                         .WithMany()
-                        .HasForeignKey("productsId")
+                        .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("api01.source.models.User", b =>
                 {
-                    b.HasOne("api01.source.models.Rol", "rol")
+                    b.HasOne("api01.source.models.Rol", "Rol")
                         .WithMany()
-                        .HasForeignKey("rolId")
+                        .HasForeignKey("RolId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("rol");
+                    b.Navigation("Rol");
                 });
 #pragma warning restore 612, 618
         }

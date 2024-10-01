@@ -5,7 +5,7 @@
 namespace api01.source.data.Migrations
 {
     /// <inheritdoc />
-    public partial class firstMigrations : Migration
+    public partial class InitialMigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,15 +46,14 @@ namespace api01.source.data.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Rut = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
-                    RoleId = table.Column<int>(type: "INTEGER", nullable: false),
-                    rolId = table.Column<int>(type: "INTEGER", nullable: false)
+                    RolId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Rols_rolId",
-                        column: x => x.rolId,
+                        name: "FK_Users_Rols_RolId",
+                        column: x => x.RolId,
                         principalTable: "Rols",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -64,15 +63,15 @@ namespace api01.source.data.Migrations
                 name: "ProductUser",
                 columns: table => new
                 {
-                    UsersId = table.Column<int>(type: "INTEGER", nullable: false),
-                    productsId = table.Column<int>(type: "INTEGER", nullable: false)
+                    ProductsId = table.Column<int>(type: "INTEGER", nullable: false),
+                    UsersId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductUser", x => new { x.UsersId, x.productsId });
+                    table.PrimaryKey("PK_ProductUser", x => new { x.ProductsId, x.UsersId });
                     table.ForeignKey(
-                        name: "FK_ProductUser_Products_productsId",
-                        column: x => x.productsId,
+                        name: "FK_ProductUser_Products_ProductsId",
+                        column: x => x.ProductsId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -85,14 +84,14 @@ namespace api01.source.data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductUser_productsId",
+                name: "IX_ProductUser_UsersId",
                 table: "ProductUser",
-                column: "productsId");
+                column: "UsersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_rolId",
+                name: "IX_Users_RolId",
                 table: "Users",
-                column: "rolId");
+                column: "RolId");
         }
 
         /// <inheritdoc />
