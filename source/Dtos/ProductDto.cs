@@ -12,7 +12,7 @@ namespace api01.source.Dtos
         public String Name { get; set; } = string.Empty;     
         public int Price { get; set; }
 
-
+        
 
     }
 }

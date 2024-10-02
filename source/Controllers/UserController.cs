@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api01.source.data;
+using api01.source.Dtos;
+using api01.source.Mappers;
 using api01.source.models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +27,7 @@ namespace api01.source.Controllers
         public IActionResult Get()
         {
 
-            var users = _context.Users.Include(u => u.Rol).ToList();
+            var users = _context.Users.Include(u => u.Rol).ToList().Select(u => u.toUserDto());
             return Ok(users);
 
         }
@@ -40,23 +42,24 @@ namespace api01.source.Controllers
             {
                 return NotFound();
             }
-            return Ok(user);
+            return Ok(user.toUserDto());
         } 
 
         [HttpPost] // Create
-        public IActionResult Post([FromBody] User user)
+        public IActionResult Post([FromBody] CreateUserRequestDto userDto)
         {
-
-            var rol = _context.Rols.FirstOrDefault(r => r.Id == user.RolId);
+            
+            var rol = _context.Rols.FirstOrDefault(r => r.Id == userDto.RolId);
             if(rol == null)
             {
                 return BadRequest("Rol not found");
 
             }
             
-            _context.Users.Add(user);
+            var userModel = userDto.toUserFromCreatoDto();
+            _context.Users.Add(userModel);
             _context.SaveChanges();
-            return Ok(user);
+            return Ok();
         }
 
 

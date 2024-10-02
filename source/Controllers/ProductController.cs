@@ -8,6 +8,8 @@ using api01.source.models;
 using api01.source.Mappers;
 using Microsoft.EntityFrameworkCore;
 using api01.source.Dtos;
+using api01.source.Interfaces;
+using api01.source.Repository;
 
 namespace api01.source.Controllers
 {
@@ -16,12 +18,13 @@ namespace api01.source.Controllers
     public class ProductController : ControllerBase
     {
 
-       private readonly ApplicationDBContext _context;
+       private readonly iProductRepository _productRepository;
 
-       public ProductController(ApplicationDBContext context)
+       public ProductController(iProductRepository productRepository)
        {
-
-            _context = context;
+            
+            _productRepository = productRepository;
+        
 
        }
 
@@ -29,7 +32,7 @@ namespace api01.source.Controllers
        public async Task<ActionResult> GetAll()
        {
 
-            var products = await _context.Products.ToListAsync();
+            var products = await _productRepository.GetAll();
             var productDto = products.Select(p => p.toProductDto());
             return Ok(productDto);
             
@@ -40,7 +43,7 @@ namespace api01.source.Controllers
        public async Task<IActionResult> GetById([FromRoute] int id)
        {
 
-            var products = await _context.Products.FindAsync(id);
+            var products = await _productRepository.GetById(id);
             if(products == null)
             {
                 return NotFound();
@@ -53,8 +56,7 @@ namespace api01.source.Controllers
        {
 
             var productModel = productDto.toProductFromCreateDto();
-            await _context.Products.AddAsync(productModel);
-            await _context.SaveChangesAsync();
+            await _productRepository.Post(productModel);
             return CreatedAtAction(nameof(GetById), new{ id = productModel.Id}, productModel.toProductDto());
 
        }
@@ -63,15 +65,12 @@ namespace api01.source.Controllers
        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UpdateProductRequestDto updateDto)
        {
 
-            var productModel = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            var productModel = await _productRepository.Put(id,updateDto);
             if(productModel == null)
             {
                 return NotFound();
             }
-            
-            productModel.Name = updateDto.Name;
-            productModel.Price = updateDto.Price;
-            await _context.SaveChangesAsync();
+
             return Ok(productModel.toProductDto());
        }
 
@@ -79,14 +78,13 @@ namespace api01.source.Controllers
 
        public async Task<IActionResult> Delete([FromRoute] int id)
        {
-            var product = await _context.Products.FirstOrDefaultAsync( p => p.Id == id);
+            var product = await _productRepository.Delete(id);
             if(product == null)
             {
                 return NotFound();
             }
 
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
+            
             return NoContent();
        }
 
