@@ -61,11 +61,11 @@ namespace api01.source.Controllers
 
 
         
-        [HttpPut("{id}")]
+        [HttpPut("{id}")] // update
         public IActionResult Put([FromRoute] int id, [FromBody] User user )
         {
             var rol = _context.Rols.FirstOrDefault(r => r.Id == user.RolId);
-            if( rol == null)
+            if( rol == null)    
             {
                 return BadRequest("Rol not found");
             }
@@ -101,7 +101,7 @@ namespace api01.source.Controllers
 
         }
 
-        [HttpPost("withCookie")]
+        [HttpPost("withCookie")] // crear un usuario con cookie
         public IActionResult PostByCookie([FromBody]User user)
         {
             var rol = _context.Rols.FirstOrDefault(r => r.Id == user.RolId);
